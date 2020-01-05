@@ -93,6 +93,7 @@ class BusLineStepModel {
         startLocation = CLLocation(latitude: start["lat"]!, longitude: start["lng"]!)
         
         instructions = step["html_instructions"] as? String
+        instructions = instructions.htmlString
         
         let points = step["polyline"] as! [String:String]
         let path = GMSPath.init(fromEncodedPath: (points["points"])!)
@@ -204,5 +205,20 @@ class BusLineModel {
         
         path = GMSPath.init(fromEncodedPath: points!)
         polyline = GMSPolyline(path: path)
+    }
+}
+
+
+extension String {
+    var htmlAttributedString: NSAttributedString? {
+        do {
+            return try NSAttributedString(data: Data(utf8), options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil)
+        } catch {
+            print("error:", error)
+            return nil
+        }
+    }
+    var htmlString: String {
+        return htmlAttributedString?.string ?? ""
     }
 }

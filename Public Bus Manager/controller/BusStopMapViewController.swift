@@ -110,6 +110,8 @@ class BusStopMapViewController: UIViewController {
             else {
                 polyline?.strokeColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
                 markers.last?.iconView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
+                markers.last?.title = transit.transitLineName ?? markers.last?.title
+                markers.last?.snippet = transit.departureStop ?? markers.last?.snippet
                 markerView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
             }
             polyline?.strokeWidth = 5
@@ -127,6 +129,8 @@ class BusStopMapViewController: UIViewController {
         }
         
         markers.last?.iconView = UIImageView(image: UIImage(named: "icon-position-bule-big"))
+        markers.last?.title = targetStr
+        markers.last?.snippet = busLine.endAddress
         
         for marker in markers {
             marker.map = googleMapView

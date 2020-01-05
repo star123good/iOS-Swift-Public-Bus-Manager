@@ -96,7 +96,7 @@ class BusStopMapViewController: UIViewController {
         currentMarker.title = "My Poisition"
         currentMarker.snippet = busLine.startAddress
         markerView = UIImageView(image: UIImage(named: "icon-position-red-big"))
-        markerView.tintColor = .red
+//        markerView.tintColor = .red
         currentMarker.iconView = markerView
         currentMarker.tracksViewChanges = true
         markers.append(currentMarker)
@@ -105,9 +105,12 @@ class BusStopMapViewController: UIViewController {
             let polyline = transit.polyline
             if transit.travelMode == TravelModeType.WALKING.rawValue {
                 polyline?.strokeColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+                markerView = UIImageView(image: UIImage(named: "icon-position-green-big"))
             }
             else {
                 polyline?.strokeColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                markers.last?.iconView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
+                markerView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
             }
             polyline?.strokeWidth = 5
             polyline?.map = googleMapView
@@ -116,12 +119,14 @@ class BusStopMapViewController: UIViewController {
             currentMarker = GMSMarker(position: position)
             currentMarker.title = transit.transitLineName ?? "TURN"
             currentMarker.snippet = transit.arrivalStop ?? transit.instructions
-            markerView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
-            markerView.tintColor = .blue
+            
+//            markerView.tintColor = .blue
             currentMarker.iconView = markerView
 //            currentMarker.tracksViewChanges = true
             markers.append(currentMarker)
         }
+        
+        markers.last?.iconView = UIImageView(image: UIImage(named: "icon-position-bule-big"))
         
         for marker in markers {
             marker.map = googleMapView

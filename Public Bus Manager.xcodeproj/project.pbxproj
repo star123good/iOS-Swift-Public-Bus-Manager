@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		813274B123BB6BEF00C71C89 /* BusLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813274B023BB6BEF00C71C89 /* BusLineTableViewCell.swift */; };
 		813F063F23B5232800749182 /* GoogleMapApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813F063E23B5232800749182 /* GoogleMapApiService.swift */; };
 		8146776023B3C24400E193B0 /* BusStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146775F23B3C24400E193B0 /* BusStopTableViewCell.swift */; };
 		8146776223B3C5A600E193B0 /* BusStopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146776123B3C5A600E193B0 /* BusStopModel.swift */; };
 		8146776423B3C75200E193B0 /* BusStopDataSetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146776323B3C75200E193B0 /* BusStopDataSetService.swift */; };
 		8146776623B4235100E193B0 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146776523B4235100E193B0 /* PopUpView.swift */; };
+		8147A3DD23B96E7F00B45ABF /* BusStopMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147A3DC23B96E7F00B45ABF /* BusStopMapViewController.swift */; };
+		8147A3E123B9903200B45ABF /* BusStopListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147A3E023B9903200B45ABF /* BusStopListTableViewCell.swift */; };
 		8151D73E23B62ECE00E36759 /* PublicBusStopList.json in Resources */ = {isa = PBXBuildFile; fileRef = 8151D73D23B62ECE00E36759 /* PublicBusStopList.json */; };
+		81538D1B23B7B32100552FA2 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81538D1A23B7B32100552FA2 /* GoogleMapViewController.swift */; };
+		81538D1D23B7C44F00552FA2 /* BusStopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81538D1C23B7C44F00552FA2 /* BusStopListViewController.swift */; };
+		81538D1F23B7DD8700552FA2 /* UIListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81538D1E23B7DD8700552FA2 /* UIListViewController.swift */; };
 		8180554623B35C3600D9214D /* BusListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8180554523B35C3600D9214D /* BusListViewController.swift */; };
 		81A2CD4B23AFD27700208E93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A2CD4A23AFD27700208E93 /* AppDelegate.swift */; };
 		81A2CD4D23AFD27700208E93 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A2CD4C23AFD27700208E93 /* SceneDelegate.swift */; };
@@ -28,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		0920C391D8441D944F39A55B /* Pods-Public Bus Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Public Bus Manager.debug.xcconfig"; path = "Target Support Files/Pods-Public Bus Manager/Pods-Public Bus Manager.debug.xcconfig"; sourceTree = "<group>"; };
+		813274B023BB6BEF00C71C89 /* BusLineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusLineTableViewCell.swift; sourceTree = "<group>"; };
 		813F063E23B5232800749182 /* GoogleMapApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapApiService.swift; sourceTree = "<group>"; };
 		813F064023B5602A00749182 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		813F064223B5603700749182 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -45,7 +52,14 @@
 		8146776123B3C5A600E193B0 /* BusStopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopModel.swift; sourceTree = "<group>"; };
 		8146776323B3C75200E193B0 /* BusStopDataSetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopDataSetService.swift; sourceTree = "<group>"; };
 		8146776523B4235100E193B0 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
+		8147A3DC23B96E7F00B45ABF /* BusStopMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopMapViewController.swift; sourceTree = "<group>"; };
+		8147A3E023B9903200B45ABF /* BusStopListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopListTableViewCell.swift; sourceTree = "<group>"; };
+		8150305E23B8B9DB00D69CFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8150306023B8B9DB00D69CFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8151D73D23B62ECE00E36759 /* PublicBusStopList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PublicBusStopList.json; sourceTree = "<group>"; };
+		81538D1A23B7B32100552FA2 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
+		81538D1C23B7C44F00552FA2 /* BusStopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopListViewController.swift; sourceTree = "<group>"; };
+		81538D1E23B7DD8700552FA2 /* UIListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIListViewController.swift; sourceTree = "<group>"; };
 		8180554523B35C3600D9214D /* BusListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusListViewController.swift; sourceTree = "<group>"; };
 		81A2CD4723AFD27700208E93 /* Public Bus Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Public Bus Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A2CD4A23AFD27700208E93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +106,16 @@
 			);
 			path = storyboard;
 			sourceTree = "<group>";
+		};
+		8150305C23B8B9DB00D69CFE /* storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				8150305D23B8B9DB00D69CFE /* LaunchScreen.storyboard */,
+				8150305F23B8B9DB00D69CFE /* Main.storyboard */,
+			);
+			name = storyboard;
+			path = "Public Bus Manager/storyboard";
+			sourceTree = SOURCE_ROOT;
 		};
 		8151D73F23B6414200E36759 /* resource */ = {
 			isa = PBXGroup;
@@ -140,6 +164,8 @@
 				81A2CD6A23AFFDD900208E93 /* ArtworkViews.swift */,
 				8146775F23B3C24400E193B0 /* BusStopTableViewCell.swift */,
 				8146776523B4235100E193B0 /* PopUpView.swift */,
+				8147A3E023B9903200B45ABF /* BusStopListTableViewCell.swift */,
+				813274B023BB6BEF00C71C89 /* BusLineTableViewCell.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -151,6 +177,10 @@
 				81A2CD4A23AFD27700208E93 /* AppDelegate.swift */,
 				81A2CD6423AFEBC400208E93 /* MapkitViewController.swift */,
 				8180554523B35C3600D9214D /* BusListViewController.swift */,
+				81538D1A23B7B32100552FA2 /* GoogleMapViewController.swift */,
+				81538D1C23B7C44F00552FA2 /* BusStopListViewController.swift */,
+				81538D1E23B7DD8700552FA2 /* UIListViewController.swift */,
+				8147A3DC23B96E7F00B45ABF /* BusStopMapViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -197,6 +227,7 @@
 		E13777BB16D2A9D0CB950D10 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				8150305C23B8B9DB00D69CFE /* storyboard */,
 				0920C391D8441D944F39A55B /* Pods-Public Bus Manager.debug.xcconfig */,
 				F3F7E325E6E4E07F0FBEF5E0 /* Pods-Public Bus Manager.release.xcconfig */,
 			);
@@ -339,14 +370,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				81A2CD6B23AFFDD900208E93 /* ArtworkViews.swift in Sources */,
+				81538D1D23B7C44F00552FA2 /* BusStopListViewController.swift in Sources */,
+				813274B123BB6BEF00C71C89 /* BusLineTableViewCell.swift in Sources */,
+				81538D1F23B7DD8700552FA2 /* UIListViewController.swift in Sources */,
 				8180554623B35C3600D9214D /* BusListViewController.swift in Sources */,
+				81538D1B23B7B32100552FA2 /* GoogleMapViewController.swift in Sources */,
 				81A2CD4B23AFD27700208E93 /* AppDelegate.swift in Sources */,
 				8146776423B3C75200E193B0 /* BusStopDataSetService.swift in Sources */,
 				8146776023B3C24400E193B0 /* BusStopTableViewCell.swift in Sources */,
+				8147A3E123B9903200B45ABF /* BusStopListTableViewCell.swift in Sources */,
 				8146776623B4235100E193B0 /* PopUpView.swift in Sources */,
 				81A2CD6523AFEBC400208E93 /* MapkitViewController.swift in Sources */,
 				81A2CD4D23AFD27700208E93 /* SceneDelegate.swift in Sources */,
 				813F063F23B5232800749182 /* GoogleMapApiService.swift in Sources */,
+				8147A3DD23B96E7F00B45ABF /* BusStopMapViewController.swift in Sources */,
 				8146776223B3C5A600E193B0 /* BusStopModel.swift in Sources */,
 				81A2CD6723AFF1D000208E93 /* ArtWork.swift in Sources */,
 			);
@@ -355,6 +392,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8150305D23B8B9DB00D69CFE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8150305E23B8B9DB00D69CFE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8150305F23B8B9DB00D69CFE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8150306023B8B9DB00D69CFE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		81A2CD5023AFD27700208E93 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

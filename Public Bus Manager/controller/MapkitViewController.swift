@@ -94,27 +94,27 @@ class MapkitViewController: UIViewController {
     
     func centerMapOnLocation(location: CLLocation) {
         self.currentLocation = location
-        if self.coordinate.count > 0 {
-            var minLongitude = self.coordinate[0].longitude
-            var maxLongitude = self.coordinate[0].longitude
-            var minLatitude = self.coordinate[0].latitude
-            var maxLatitude = self.coordinate[0].latitude
-            for coord in self.coordinate {
-                if coord.longitude > maxLongitude {
-                    maxLongitude = coord.longitude
-                }
-                if coord.longitude < minLongitude {
-                    minLongitude = coord.longitude
-                }
-                if coord.latitude > maxLatitude {
-                    maxLatitude = coord.latitude
-                }
-                if coord.latitude > minLatitude {
-                    minLatitude = coord.latitude
-                }
-            }
-            self.regionRadius = max(maxLatitude - minLatitude, maxLatitude - minLatitude) * 637.8137
-        }
+//        if self.coordinate.count > 0 {
+//            var minLongitude = self.coordinate[0].longitude
+//            var maxLongitude = self.coordinate[0].longitude
+//            var minLatitude = self.coordinate[0].latitude
+//            var maxLatitude = self.coordinate[0].latitude
+//            for coord in self.coordinate {
+//                if coord.longitude > maxLongitude {
+//                    maxLongitude = coord.longitude
+//                }
+//                if coord.longitude < minLongitude {
+//                    minLongitude = coord.longitude
+//                }
+//                if coord.latitude > maxLatitude {
+//                    maxLatitude = coord.latitude
+//                }
+//                if coord.latitude > minLatitude {
+//                    minLatitude = coord.latitude
+//                }
+//            }
+//            self.regionRadius = max(maxLatitude - minLatitude, maxLatitude - minLatitude) * 637.8137
+//        }
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
                                                   latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapKitView.setRegion(coordinateRegion, animated: true)

@@ -16,6 +16,7 @@ class BusStopListTableViewCell: UITableViewCell {
     @IBOutlet var busLineButton: UIButton!
     @IBOutlet var currencyAndStationsLabel: UILabel!
     @IBOutlet var arrivalTimeAndAddressLabel: UILabel!
+    @IBOutlet var busLineButtonWidthConstraint: NSLayoutConstraint!
     
     func updateViews(busLine: BusLineModel){
         durationTimeLabel.text = busLine.duration
@@ -43,7 +44,12 @@ class BusStopListTableViewCell: UITableViewCell {
         busLineButton.layer.cornerRadius = 10
         busLineButton.layer.borderWidth = 2
         busLineButton.layer.borderColor = #colorLiteral(red: 0.2549019608, green: 0.4980392157, blue: 0.8470588235, alpha: 1)
-//        busLineButton.sizeThatFits(CGSize(width: busLineButton.intrinsicContentSize.width, height: 25))
+        let imageWidth = busLineButton.imageView!.frame.width
+        let textWidth = (busLineButton.titleLabel?.text! as! NSString).size(withAttributes:[NSAttributedString.Key.font:busLineButton.titleLabel!.font!]).width
+        let width = textWidth + imageWidth + 30
+        //24 - the sum of your insets from left and right
+        busLineButtonWidthConstraint.constant = width
+        self.layoutIfNeeded()
     }
 }
 

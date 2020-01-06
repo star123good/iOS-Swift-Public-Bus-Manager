@@ -209,6 +209,22 @@ class BusLineModel {
 }
 
 
+class AddressNode {
+    
+    public var description: String!
+    public var mainText: String!
+    public var secondaryText: String!
+    
+    init(prediction: [String:AnyObject]) {
+        description = prediction["description"] as? String
+        
+        let structuredFormatting = prediction["structured_formatting"] as? [String:AnyObject]
+        mainText = structuredFormatting?["main_text"] as? String
+        secondaryText = structuredFormatting?["secondary_text"] as? String
+    }
+}
+
+
 extension String {
     var htmlAttributedString: NSAttributedString? {
         do {

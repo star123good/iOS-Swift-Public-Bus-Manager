@@ -57,6 +57,7 @@ class BusLineTransitTableViewCell: UITableViewCell {
     @IBOutlet var transitButton: UIButton!
     @IBOutlet var transitTopLabel: UILabel!
     @IBOutlet var transitBottomLabel: UILabel!
+    @IBOutlet var transitButtonWidthConstraint: NSLayoutConstraint!
     
     func updateViews(transit: BusLineStepModel){
         print("bus line transit table cell")
@@ -67,5 +68,10 @@ class BusLineTransitTableViewCell: UITableViewCell {
         transitTopLabel.text = transit.instructions
         
         transitBottomLabel.text = "Bus Stops: \(transit.transitLineStops ?? 1) (" + transit.duration + ")"
+        
+//        let imageWidth = transitButton.imageView!.frame.width
+        let textWidth = (transitButton.titleLabel!.text! as NSString).size(withAttributes:[NSAttributedString.Key.font:transitButton.titleLabel!.font!]).width
+        let width = textWidth + 30
+        transitButtonWidthConstraint.constant = width
     }
 }

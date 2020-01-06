@@ -45,9 +45,9 @@ class BusStopListTableViewCell: UITableViewCell {
         busLineButton.layer.borderWidth = 2
         busLineButton.layer.borderColor = #colorLiteral(red: 0.2549019608, green: 0.4980392157, blue: 0.8470588235, alpha: 1)
         let imageWidth = busLineButton.imageView!.frame.width
-        let textWidth = (busLineButton.titleLabel?.text! as! NSString).size(withAttributes:[NSAttributedString.Key.font:busLineButton.titleLabel!.font!]).width
+        let textWidth = (busLineButton.titleLabel!.text! as NSString).size(withAttributes:[NSAttributedString.Key.font:busLineButton.titleLabel!.font!]).width
         let width = textWidth + imageWidth + 30
-        //24 - the sum of your insets from left and right
+        //30 - the sum of your insets from left and right
         busLineButtonWidthConstraint.constant = width
         self.layoutIfNeeded()
     }
@@ -63,5 +63,17 @@ class TaxiTableViewCell: UITableViewCell{
     
     func updateViews(){
         //
+    }
+}
+
+
+class AddressTableViewCell: UITableViewCell {
+    
+    @IBOutlet var addressTitleLabel: UILabel!
+    @IBOutlet var addressDetailLabel: UILabel!
+    
+    func updateViews(address: AddressNode){
+        addressTitleLabel.text = address.mainText
+        addressDetailLabel.text = address.secondaryText
     }
 }

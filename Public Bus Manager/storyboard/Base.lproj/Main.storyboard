@@ -302,7 +302,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nld-63-YFj">
-                                        <rect key="frame" x="-20" y="53" width="454" height="52"/>
+                                        <rect key="frame" x="-20" y="49" width="454" height="52"/>
                                         <subviews>
                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7nC-P8-2vm">
                                                 <rect key="frame" x="20" y="8" width="414" height="36"/>
@@ -363,8 +363,8 @@
                                             <constraint firstItem="7nC-P8-2vm" firstAttribute="top" secondItem="Nld-63-YFj" secondAttribute="top" constant="8" id="euk-DY-Qgf"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzI-UF-MMp">
-                                        <rect key="frame" x="0.0" y="113" width="414" height="50"/>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzI-UF-MMp">
+                                        <rect key="frame" x="0.0" y="109" width="414" height="50"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpz-68-Ave">
                                                 <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
@@ -428,7 +428,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TvP-AC-tdC">
-                                        <rect key="frame" x="20" y="171" width="374" height="603"/>
+                                        <rect key="frame" x="20" y="113" width="374" height="661"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listTableViewCell1" id="Y3K-5C-yJq" customClass="BusStopListTableViewCell" customModule="Public_Bus_Manager">

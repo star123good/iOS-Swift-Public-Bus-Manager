@@ -61,6 +61,7 @@ class UIListViewController: UIViewController {
     var addressList: [AddressNode]?
     var isTableStateAddress = false
     var isSelectedTargetText = true
+    var isGoogleApiRunning = false
     var originLocation = ""
     var targetLocation = ""
     
@@ -153,6 +154,10 @@ class UIListViewController: UIViewController {
     }
     
     func getGoogleMapAutoComplete(input: String){
+        if self.isGoogleApiRunning {
+            return
+        }
+        self.isGoogleApiRunning = true
         self.addressList = []
         
         let urlQuery = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=\(input)&types=geocode&key=\(googleApiKey)"
@@ -189,6 +194,7 @@ class UIListViewController: UIViewController {
                 }
                 
                 print("============ google complete ============")
+                self.isGoogleApiRunning = false
                 //Reload your table here
                 self.isTableStateAddress = true
                 self.busLineTableView.reloadData()
@@ -198,6 +204,10 @@ class UIListViewController: UIViewController {
     }
     
     func getGoogleMapDistance(modes: [String], origin: String, target: String){
+        if self.isGoogleApiRunning {
+            return
+        }
+        self.isGoogleApiRunning = true
         self.busLines = []
 
         let group = DispatchGroup()
@@ -252,6 +262,7 @@ class UIListViewController: UIViewController {
             // *****************************************************************************************
             // this will be executed when for each group.enter() call, a group.leave() has been executed
             print("============ google complete ============")
+            self.isGoogleApiRunning = false
             DispatchQueue.main.async{
                 //Reload your table here
                 self.isTableStateAddress = false
@@ -308,10 +319,15 @@ extension UIListViewController: UITableViewDataSource, UITableViewDelegate {
         if isTableStateAddress {
             // show addess table view
             print("address table view cell")
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell3") as? AddressTableViewCell {
-                let address = addressList![indexPath.row]
-                cell.updateViews(address: address)
-                return cell
+            if indexPath.row < addressList!.count {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell3") as? AddressTableViewCell {
+                    let address = addressList![indexPath.row]
+                    cell.updateViews(address: address)
+                    return cell
+                }
+                else {
+                    return AddressTableViewCell()
+                }
             }
             else{
                 return AddressTableViewCell()
@@ -346,14 +362,16 @@ extension UIListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isTableStateAddress {
             // show addess table view
-            let address = addressList![indexPath.row]
-            if isSelectedTargetText {
-                targetLocationText.text = address.description
+            if indexPath.row < addressList!.count {
+                let address = addressList![indexPath.row]
+                if isSelectedTargetText {
+                    targetLocationText.text = address.description
+                }
+                else{
+                    originLocationText.text = address.description
+                }
+                getDistancesFromLocations()
             }
-            else{
-                originLocationText.text = address.description
-            }
-            getDistancesFromLocations()
         }
         else{
             // show bus line table view

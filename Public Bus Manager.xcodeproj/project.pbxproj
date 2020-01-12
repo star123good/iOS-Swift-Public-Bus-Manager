@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8118606723C9BBE9006F07BA /* Temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = 8118606623C9BBE9006F07BA /* Temperature.json */; };
 		813274B123BB6BEF00C71C89 /* BusLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813274B023BB6BEF00C71C89 /* BusLineTableViewCell.swift */; };
+		813D719D23C50BE500D3B939 /* BusStopWithLineDataSetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D719C23C50BE500D3B939 /* BusStopWithLineDataSetService.swift */; };
+		813D719F23C50F8F00D3B939 /* PublicBusStopWithLineList.json in Resources */ = {isa = PBXBuildFile; fileRef = 813D719E23C50F8F00D3B939 /* PublicBusStopWithLineList.json */; };
+		813D71A123C51D1100D3B939 /* BusStopWithLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D71A023C51D1100D3B939 /* BusStopWithLineModel.swift */; };
+		813D71A323C51D4400D3B939 /* BusLineStepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D71A223C51D4400D3B939 /* BusLineStepModel.swift */; };
+		813D71A523C51DBC00D3B939 /* AddressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D71A423C51DBC00D3B939 /* AddressNode.swift */; };
+		813D71A723C51E2D00D3B939 /* TravelModeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D71A623C51E2D00D3B939 /* TravelModeType.swift */; };
+		813D71A923C5351C00D3B939 /* CalculateTheShortestRouteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D71A823C5351C00D3B939 /* CalculateTheShortestRouteService.swift */; };
 		813F063F23B5232800749182 /* GoogleMapApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813F063E23B5232800749182 /* GoogleMapApiService.swift */; };
 		8146776023B3C24400E193B0 /* BusStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146775F23B3C24400E193B0 /* BusStopTableViewCell.swift */; };
 		8146776223B3C5A600E193B0 /* BusStopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146776123B3C5A600E193B0 /* BusStopModel.swift */; };
@@ -34,7 +42,15 @@
 
 /* Begin PBXFileReference section */
 		0920C391D8441D944F39A55B /* Pods-Public Bus Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Public Bus Manager.debug.xcconfig"; path = "Target Support Files/Pods-Public Bus Manager/Pods-Public Bus Manager.debug.xcconfig"; sourceTree = "<group>"; };
+		8118606623C9BBE9006F07BA /* Temperature.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Temperature.json; sourceTree = "<group>"; };
 		813274B023BB6BEF00C71C89 /* BusLineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusLineTableViewCell.swift; sourceTree = "<group>"; };
+		813D719C23C50BE500D3B939 /* BusStopWithLineDataSetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopWithLineDataSetService.swift; sourceTree = "<group>"; };
+		813D719E23C50F8F00D3B939 /* PublicBusStopWithLineList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PublicBusStopWithLineList.json; sourceTree = "<group>"; };
+		813D71A023C51D1100D3B939 /* BusStopWithLineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopWithLineModel.swift; sourceTree = "<group>"; };
+		813D71A223C51D4400D3B939 /* BusLineStepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusLineStepModel.swift; sourceTree = "<group>"; };
+		813D71A423C51DBC00D3B939 /* AddressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNode.swift; sourceTree = "<group>"; };
+		813D71A623C51E2D00D3B939 /* TravelModeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelModeType.swift; sourceTree = "<group>"; };
+		813D71A823C5351C00D3B939 /* CalculateTheShortestRouteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateTheShortestRouteService.swift; sourceTree = "<group>"; };
 		813F063E23B5232800749182 /* GoogleMapApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapApiService.swift; sourceTree = "<group>"; };
 		813F064023B5602A00749182 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		813F064223B5603700749182 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -93,7 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				8146776323B3C75200E193B0 /* BusStopDataSetService.swift */,
+				813D719C23C50BE500D3B939 /* BusStopWithLineDataSetService.swift */,
 				813F063E23B5232800749182 /* GoogleMapApiService.swift */,
+				813D71A823C5351C00D3B939 /* CalculateTheShortestRouteService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -121,7 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				8151D73D23B62ECE00E36759 /* PublicBusStopList.json */,
+				813D719E23C50F8F00D3B939 /* PublicBusStopWithLineList.json */,
 				81A2CD6823AFF91F00208E93 /* PublicArt.json */,
+				8118606623C9BBE9006F07BA /* Temperature.json */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -199,6 +219,10 @@
 			children = (
 				81A2CD6623AFF1D000208E93 /* ArtWork.swift */,
 				8146776123B3C5A600E193B0 /* BusStopModel.swift */,
+				813D71A023C51D1100D3B939 /* BusStopWithLineModel.swift */,
+				813D71A223C51D4400D3B939 /* BusLineStepModel.swift */,
+				813D71A423C51DBC00D3B939 /* AddressNode.swift */,
+				813D71A623C51E2D00D3B939 /* TravelModeType.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -297,7 +321,9 @@
 			files = (
 				81A2CD6923AFF91F00208E93 /* PublicArt.json in Resources */,
 				8151D73E23B62ECE00E36759 /* PublicBusStopList.json in Resources */,
+				8118606723C9BBE9006F07BA /* Temperature.json in Resources */,
 				81A2CD5723AFD27B00208E93 /* LaunchScreen.storyboard in Resources */,
+				813D719F23C50F8F00D3B939 /* PublicBusStopWithLineList.json in Resources */,
 				81A2CD5423AFD27B00208E93 /* Assets.xcassets in Resources */,
 				81A2CD5223AFD27700208E93 /* Main.storyboard in Resources */,
 			);
@@ -375,15 +401,21 @@
 				81538D1F23B7DD8700552FA2 /* UIListViewController.swift in Sources */,
 				8180554623B35C3600D9214D /* BusListViewController.swift in Sources */,
 				81538D1B23B7B32100552FA2 /* GoogleMapViewController.swift in Sources */,
+				813D71A523C51DBC00D3B939 /* AddressNode.swift in Sources */,
 				81A2CD4B23AFD27700208E93 /* AppDelegate.swift in Sources */,
 				8146776423B3C75200E193B0 /* BusStopDataSetService.swift in Sources */,
+				813D71A323C51D4400D3B939 /* BusLineStepModel.swift in Sources */,
 				8146776023B3C24400E193B0 /* BusStopTableViewCell.swift in Sources */,
+				813D71A123C51D1100D3B939 /* BusStopWithLineModel.swift in Sources */,
 				8147A3E123B9903200B45ABF /* BusStopListTableViewCell.swift in Sources */,
 				8146776623B4235100E193B0 /* PopUpView.swift in Sources */,
 				81A2CD6523AFEBC400208E93 /* MapkitViewController.swift in Sources */,
+				813D71A923C5351C00D3B939 /* CalculateTheShortestRouteService.swift in Sources */,
 				81A2CD4D23AFD27700208E93 /* SceneDelegate.swift in Sources */,
+				813D71A723C51E2D00D3B939 /* TravelModeType.swift in Sources */,
 				813F063F23B5232800749182 /* GoogleMapApiService.swift in Sources */,
 				8147A3DD23B96E7F00B45ABF /* BusStopMapViewController.swift in Sources */,
+				813D719D23C50BE500D3B939 /* BusStopWithLineDataSetService.swift in Sources */,
 				8146776223B3C5A600E193B0 /* BusStopModel.swift in Sources */,
 				81A2CD6723AFF1D000208E93 /* ArtWork.swift in Sources */,
 			);

@@ -17,7 +17,8 @@ class BusLineWalkingTableViewCell: UITableViewCell {
     @IBOutlet var walkingTopUImageView: UIImageView!
     @IBOutlet var walkingBottomUImageView: UIImageView!
     
-    func updateViews(transit: BusLineStepModel, option: Int, top: String, bottom: String){
+    
+    func updateBasicViews(distance: String, duration: String, option: Int, top: String, bottom: String) {
         print("bus line walking table cell")
         
         walkingButton.backgroundColor = .clear
@@ -26,7 +27,7 @@ class BusLineWalkingTableViewCell: UITableViewCell {
         walkingButton.layer.borderColor = #colorLiteral(red: 0.2549019608, green: 0.4980392157, blue: 0.8470588235, alpha: 1)
         
         walkingPositionLabel.text = top
-        walkingDistanceLabel.text = transit.distance + " (" + transit.duration + ")"
+        walkingDistanceLabel.text = distance + " (" + duration + ")"
         walkingBusStopLabel.text = bottom
         
         switch option {
@@ -49,6 +50,14 @@ class BusLineWalkingTableViewCell: UITableViewCell {
         default:
             break
         }
+    }
+    
+    func updateViews(transit: BusLineStepModel, option: Int, top: String, bottom: String){
+        updateBasicViews(distance: transit.distance, duration: transit.duration, option: option, top: top, bottom: bottom)
+    }
+    
+    func updateViews(busLine: BusLineModel, option: Int, top: String, bottom: String){
+        updateBasicViews(distance: busLine.distance, duration: busLine.duration, option: option, top: top, bottom: bottom)
     }
 }
 

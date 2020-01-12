@@ -1,8 +1,7 @@
 [
-["Junipero Serra Fwy", "Cupertino, CA 95014", 37.334445, -122.045541]
-["Junipero Serra Fwy", "Cupertino, CA 95014", 37.334436, -122.037237]
-["Junipero Serra Fwy", "Cupertino, CA 95014", 37.334530, -122.028901]
-["Junipero Serra Fwy", "Cupertino, CA 95014", 37.333800, -122.020668]
-["Junipero Serra Fwy", "Santa Clara, CA 95051", 37.330340, -122.013674]
-["Junipero Serra Fwy", "San Jose, CA 95129", 37.328003, -122.009157]
+["Nassau, The Bahamas", "S W Rd, First Bus Stop",  25.0444432,-77.3505922],
+["Nassau, The Bahamas", "S W Rd, Second Bus Stop", 25.0542838,-77.3859692],
+["Nassau, The Bahamas", "S W Rd, Third Bus Stop", 25.0543464,-77.3935339],
+["Nassau, The Bahamas", "S W Rd, Forth Bus Stop", 25.0542031,-77.3946424],
+["Nassau, The Bahamas", "S W Rd, Fifth Bus Stop", 25.0551932,-77.4594657]
 ]

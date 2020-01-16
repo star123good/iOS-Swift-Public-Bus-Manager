@@ -39,7 +39,9 @@ class BusStopWithLineDataSetService {
             tempBusStop : BusStopWithLineModel!,
             jj = 0
         
-        for _ in 0...(availableHalfCount-1) {
+        availableBusStopList = []
+        
+        for _ in 0..<(availableHalfCount-1) {
             j = 0
             tempDis = 100000000.0
             jj = -1
@@ -72,6 +74,10 @@ class BusStopWithLineDataSetService {
                 known[jj] = false
             }
         }
+        
+        // add target as bus stop model
+        tempBusStop = BusStopWithLineModel(title: "", description: "", iconFile: "", longitude: tagLng, latitude: tagLat, distance: 0, duration: 0, points: [], lineTitle: "", lineIndex: 0)
+        availableBusStopList.append(tempBusStop)
         
         return availableBusStopList
     }

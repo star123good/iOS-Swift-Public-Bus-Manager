@@ -55,24 +55,24 @@ class UIListViewController: UIViewController {
     let googleApiKey = "AIzaSyAsVN1AHgbMr2n3SYtNZxFiT7e1bz3tP5s"
     let myPositionStr = "My Position"
     let locationManager = CLLocationManager()
-    var currentLocation = CLLocation()
-    var polyline: GMSPolyline?
-    var bounds: GMSCoordinateBounds?
-    var busLines: [BusLineModel]?
-    var drawBusLines: [BusLineModel]?
-    var addressList: [AddressNode]?
-    var isTableStateAddress = false
-    var isSelectedTargetText = true
-    var isGoogleApiRunning = false
-    var indexFirst: Int!
-    var originLocation = ""
-    var targetLocation = ""
-    var originCLLocation = CLLocation()
-    var targetCLLocation = CLLocation()
-    var isOriginCheck = false
-    var isTargetCheck = false
-    var calcService: CalculateTheShortestRouteService!
-    var dataService: BusStopWithLineDataSetService!
+    public var currentLocation = CLLocation()
+    public var polyline: GMSPolyline?
+    public var bounds: GMSCoordinateBounds?
+    public var busLines: [BusLineModel]?
+    public var drawBusLines: [BusLineModel]?
+    public var addressList: [AddressNode]?
+    public var isTableStateAddress = false
+    public var isSelectedTargetText = true
+    public var isGoogleApiRunning = false
+    public var indexFirst: Int!
+    public var originLocation = ""
+    public var targetLocation = ""
+    public var originCLLocation = CLLocation()
+    public var targetCLLocation = CLLocation()
+    public var isOriginCheck = false
+    public var isTargetCheck = false
+    public var calcService: CalculateTheShortestRouteService!
+    public var dataService: BusStopWithLineDataSetService!
     
     
     override func viewDidLoad() {
@@ -116,7 +116,8 @@ class UIListViewController: UIViewController {
             busStopMapViewController.targetStr = targetLocation
             busStopMapViewController.currentLocation = currentLocation
             busStopMapViewController.indexFirst = indexFirst
-            busStopMapViewController.isDrawMoving = true
+            busStopMapViewController.calcService = calcService
+            busStopMapViewController.dataService = dataService
         }
     }
     
@@ -206,16 +207,33 @@ class UIListViewController: UIViewController {
     
     func callGoogleMapDistanceWithBusLine(_ busLine: BusLineModel) {
         let mode = [TravelModeType.WALKING_LOWER.rawValue]
-        let origins = [
-            "\(originCLLocation.coordinate.latitude),\(originCLLocation.coordinate.longitude)",
-            "\(busLine.endLocation.coordinate.latitude),\(busLine.endLocation.coordinate.longitude)"
-        ]
-        let targets = [
-            "\(busLine.startLocation.coordinate.latitude),\(busLine.startLocation.coordinate.longitude)",
-            "\(targetCLLocation.coordinate.latitude),\(targetCLLocation.coordinate.longitude)"
-        ]
+        var origins: [String],
+            targets: [String]
+        if busLine.transits.count > 0 {
+            // transit mode
+            origins = [
+                "\(originCLLocation.coordinate.latitude),\(originCLLocation.coordinate.longitude)",
+                "\(busLine.endLocation.coordinate.latitude),\(busLine.endLocation.coordinate.longitude)"
+            ]
+            targets = [
+                "\(busLine.startLocation.coordinate.latitude),\(busLine.startLocation.coordinate.longitude)",
+                "\(targetCLLocation.coordinate.latitude),\(targetCLLocation.coordinate.longitude)"
+            ]
+            
+            self.drawBusLines = [busLine]
+        }
+        else {
+            // walking mode
+            origins = [
+                "\(originCLLocation.coordinate.latitude),\(originCLLocation.coordinate.longitude)"
+            ]
+            targets = [
+                "\(targetCLLocation.coordinate.latitude),\(targetCLLocation.coordinate.longitude)"
+            ]
+            
+            self.drawBusLines = []
+        }
         
-        self.drawBusLines = [busLine]
         getGoogleMapDistance(modes: mode, origins: origins, targets: targets)
     }
     
@@ -390,7 +408,32 @@ class UIListViewController: UIViewController {
                 print("============ google success ============")
                 self.calcService = CalculateTheShortestRouteService(busLineService: self.dataService, rows: rows, startAddress: self.originLocation, endAddress: self.targetLocation)
                 self.calcService.calcShortestDuration()
-                self.busLines?.append(BusLineModel(customize: self.calcService.getCustomizeByBusLineModel()))
+                
+                var tempLine1 : BusLineModel!,
+                    tempLine2 : BusLineModel!
+                if self.calcService.isWalkingShortest {
+                    tempLine1 = BusLineModel(customizeWalking: self.calcService.getCustomizeWalkingByBusLineModel())
+                }
+                if self.calcService.selectedShortest {
+                    tempLine2 = BusLineModel(customize: self.calcService.getCustomizeByBusLineModel())
+                }
+                if self.calcService.isBothShowLines {
+                    if tempLine1.durationValue < tempLine2.durationValue {
+                        self.busLines?.append(tempLine1)
+                        self.busLines?.append(tempLine2)
+                    }
+                    else {
+                        self.busLines?.append(tempLine1)
+                        self.busLines?.append(tempLine2)
+                    }
+                }
+                else if self.calcService.isWalkingShortest {
+                    self.busLines?.append(tempLine1)
+                }
+                else if self.calcService.selectedShortest {
+                    self.busLines?.append(tempLine2)
+                }
+                
                 print("============ google complete ============")
                 self.isGoogleApiRunning = false
                 //Reload your table here

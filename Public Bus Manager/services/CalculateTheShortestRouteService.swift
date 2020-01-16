@@ -27,6 +27,10 @@ class CalculateTheShortestRouteService {
     public var shortestWalkingDistance: Int
     public var shortestTransitDistance: Int
     public var shortestTransitDuration: Int
+    public var isWalkingShortest: Bool
+    public var walkShortestDuration: Int
+    public var walkShortestDistance: Int
+    public var isBothShowLines: Bool
     public var customize = [String:AnyObject]()
     public var startAddress: String
     public var endAddress: String
@@ -70,6 +74,10 @@ class CalculateTheShortestRouteService {
         self.shortestWalkingDistance = 0
         self.shortestTransitDistance = 0
         self.shortestTransitDuration = 0
+        self.isWalkingShortest = false
+        self.walkShortestDistance = 0
+        self.walkShortestDuration = 0
+        self.isBothShowLines = false
         self.startAddress = startAddress
         self.endAddress = endAddress
     }
@@ -105,10 +113,12 @@ class CalculateTheShortestRouteService {
             tempDuration = 0
         shortestDuration = 1000000
         selectedShortest = false
+        isWalkingShortest = false
         
         if durationsValue.count == 2 {
-            for i in 0...(durationsValue[0].count-1) {
-                for j in 0...(durationsValue[1].count-1) {
+            let lastAvailableIndex = durationsValue[1].count-1
+            for i in 0...lastAvailableIndex {
+                for j in 0...lastAvailableIndex {
                     if durationsValue[0][i] > -1 && durationsValue[1][j] > -1 {
                         // duration
                         orgToSt = durationsValue[0][i]
@@ -128,6 +138,23 @@ class CalculateTheShortestRouteService {
                                 shortestTransitDuration = stToEn
                             }
                         }
+                    }
+                }
+            }
+            
+            // compare walking
+            if availableBusStopList[lastAvailableIndex].lineTitle == "" {
+                isWalkingShortest = true
+                walkShortestDuration = durationsValue[0][lastAvailableIndex]
+                walkShortestDistance = distancesValue[0][lastAvailableIndex]
+                if selectedShortest {
+                    // both of walking and transit
+                    if walkShortestDuration == 0 || ( walkShortestDuration > 0 && shortestDuration / walkShortestDuration > 10) {
+                        isBothShowLines = false
+                        selectedShortest = false
+                    }
+                    else {
+                        isBothShowLines = true
                     }
                 }
             }
@@ -189,6 +216,27 @@ class CalculateTheShortestRouteService {
         }
         
         let currentTime = (Date().timeIntervalSince1970).rounded() + Double(shortestDuration)
+        let df = DateFormatter()
+        df.dateFormat = "hh:mm"
+        let arrivalDate = Date(timeIntervalSince1970: TimeInterval(currentTime))
+        lines["arrival"] = df.string(from: arrivalDate) as AnyObject
+        
+        lines["startAddress"] = startAddress as AnyObject
+        lines["endAddress"] = endAddress as AnyObject
+        
+        self.customize = lines
+        return self.customize
+    }
+    
+    func getCustomizeWalkingByBusLineModel() -> [String:AnyObject] {
+        var lines = [String:AnyObject]()
+        
+        lines["duration"] = String(format:"%d mins", walkShortestDuration / 60) as AnyObject
+        lines["durationValue"] = walkShortestDuration as AnyObject
+        lines["distance"] = String(format:"%d m", walkShortestDistance) as AnyObject
+        lines["distanceValue"] = walkShortestDistance as AnyObject
+        
+        let currentTime = (Date().timeIntervalSince1970).rounded() + Double(walkShortestDuration)
         let df = DateFormatter()
         df.dateFormat = "hh:mm"
         let arrivalDate = Date(timeIntervalSince1970: TimeInterval(currentTime))

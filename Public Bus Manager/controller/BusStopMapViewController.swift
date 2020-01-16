@@ -29,7 +29,9 @@ class BusStopMapViewController: UIViewController {
     @IBOutlet var busLineTableView: UITableView!
     
     let locationManager = CLLocationManager()
-    var currentLocation = CLLocation()
+    public var currentLocation = CLLocation()
+    public var calcService: CalculateTheShortestRouteService!
+    public var dataService: BusStopWithLineDataSetService!
     public var busLines: [BusLineModel]!
     private var transitBusLine: BusLineModel!
     private var walkStBusLine: BusLineModel!
@@ -43,6 +45,9 @@ class BusStopMapViewController: UIViewController {
     private var indexInBusLine = 0
     private var durationTime = 0.0
     private var popUpState = true
+    private var totalTransitCount = 0
+    private var selectedBusStopList: [BusStopWithLineModel]!
+    private var nonSelectedBusStopList: [BusStopWithLineModel]!
     
     
     override func viewDidLoad() {
@@ -54,7 +59,9 @@ class BusStopMapViewController: UIViewController {
         busLineTableView.dataSource = self
         busLineTableView.delegate = self
         
-        if busLines.count == 3 {
+        totalTransitCount = busLines.count
+        if totalTransitCount == 3 {
+            // transit mode
             transitBusLine = busLines[0]
             if indexFirst == 2 {
                 walkStBusLine = busLines[1]
@@ -63,6 +70,36 @@ class BusStopMapViewController: UIViewController {
             else {
                 walkStBusLine = busLines[2]
                 walkEnBusLine = busLines[1]
+            }
+            
+            isDrawMoving = true
+        }
+        else if totalTransitCount == 1 {
+            // walking mode
+            transitBusLine = nil
+            walkStBusLine = busLines[0]
+            walkEnBusLine = nil
+            
+            isDrawMoving = false
+        }
+        
+        selectedBusStopList = []
+        nonSelectedBusStopList = []
+        for busStop in dataService.allBusStopList {
+            var flagExists = false
+            if transitBusLine != nil &&
+                calcService.selectedShortest &&
+                calcService.selectedBusLine.title == busStop.lineTitle &&
+                calcService.selectedStartBusStopIndex <= busStop.lineIndex &&
+                calcService.selectedEndBusStopIndex >= busStop.lineIndex
+                {
+                flagExists = true
+            }
+            if flagExists {
+                selectedBusStopList.append(busStop)
+            }
+            else {
+                nonSelectedBusStopList.append(busStop)
             }
         }
         
@@ -94,6 +131,9 @@ class BusStopMapViewController: UIViewController {
     @IBAction func backNaviagateButtonClicked(_ sender: Any) {
         isDrawMoving = false
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func resetPostionButtonClicked(_ sender: Any) {
     }
     
     @IBAction func currentPositionButtonClicked(_ sender: Any) {
@@ -169,67 +209,107 @@ class BusStopMapViewController: UIViewController {
     }
         
     func drawGoogleMapViewWithBusLines() {
-        var position = walkStBusLine.startLocation.coordinate
+        var position = CLLocationCoordinate2D()
         var markerView = UIImageView()
-        var currentMarker = GMSMarker(position: position)
-        currentMarker.title = startStr
-        currentMarker.snippet = walkStBusLine.startAddress
-        markerView = UIImageView(image: UIImage(named: "icon-position-red-big"))
-        currentMarker.iconView = markerView
-        currentMarker.tracksViewChanges = true
-        currentMarker.map = googleMapView
+        var currentMarker = GMSMarker()
+        var iconImage = UIImage()
         
-        position = walkStBusLine.endLocation.coordinate
-        currentMarker = GMSMarker(position: position)
-        currentMarker.title = transitBusLine.transits.first!.departureStop
-        currentMarker.snippet = walkStBusLine.endAddress
-        markerView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
-        currentMarker.iconView = markerView
-        currentMarker.tracksViewChanges = true
-        currentMarker.map = googleMapView
+        if walkStBusLine != nil && walkEnBusLine != nil {
+            position = walkStBusLine.startLocation.coordinate
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = startStr
+            currentMarker.snippet = walkStBusLine.startAddress
+            markerView = UIImageView(image: UIImage(named: "icon-position-red-big"))
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+            
+            position = walkEnBusLine.endLocation.coordinate
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = targetStr
+            currentMarker.snippet = walkEnBusLine.endAddress
+            markerView = UIImageView(image: UIImage(named: "icon-position-bule-big"))
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+        }
+        else if walkStBusLine != nil {
+            position = walkStBusLine.startLocation.coordinate
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = startStr
+            currentMarker.snippet = walkStBusLine.startAddress
+            markerView = UIImageView(image: UIImage(named: "icon-position-red-big"))
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+            
+            position = walkStBusLine.endLocation.coordinate
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = targetStr
+            currentMarker.snippet = walkStBusLine.endAddress
+            markerView = UIImageView(image: UIImage(named: "icon-position-bule-big"))
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+        }
         
-        position = walkEnBusLine.startLocation.coordinate
-        currentMarker = GMSMarker(position: position)
-        currentMarker.title = transitBusLine.transits.first!.arrivalStop
-        currentMarker.snippet = walkEnBusLine.startAddress
-        markerView = UIImageView(image: UIImage(named: "icons8-traditional-school-bus-30"))
-        currentMarker.iconView = markerView
-        currentMarker.tracksViewChanges = true
-        currentMarker.map = googleMapView
+        for busStop in selectedBusStopList {
+            position = CLLocationCoordinate2D(latitude: busStop.latitude, longitude: busStop.longitude)
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = busStop.description
+            currentMarker.snippet = busStop.lineTitle
+            
+            iconImage = UIImage(named: "icons8-traditional-school-bus-30")!
+            iconImage = iconImage.withTintColor(#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1))
+            
+            markerView = UIImageView(image: iconImage)
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+        }
         
-        position = walkEnBusLine.endLocation.coordinate
-        currentMarker = GMSMarker(position: position)
-        currentMarker.title = targetStr
-        currentMarker.snippet = walkEnBusLine.endAddress
-        markerView = UIImageView(image: UIImage(named: "icon-position-bule-big"))
-        currentMarker.iconView = markerView
-        currentMarker.tracksViewChanges = true
-        currentMarker.map = googleMapView
+        for busStop in nonSelectedBusStopList {
+            position = CLLocationCoordinate2D(latitude: busStop.latitude, longitude: busStop.longitude)
+            currentMarker = GMSMarker(position: position)
+            currentMarker.title = busStop.description
+            currentMarker.snippet = busStop.lineTitle
+            
+            iconImage = UIImage(named: "icons8-traditional-school-bus-30")!
+            iconImage = iconImage.withTintColor(#colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1))
+            
+            markerView = UIImageView(image: iconImage)
+            currentMarker.iconView = markerView
+            currentMarker.tracksViewChanges = true
+            currentMarker.map = googleMapView
+        }
         
         
-        var polyline = walkStBusLine.polyline
+        var polyline = GMSPolyline()
         var totalBounds = GMSCoordinateBounds()
-        polyline!.strokeColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        polyline!.strokeWidth = 5
-        polyline!.map = googleMapView
-        totalBounds = totalBounds.includingBounds(walkStBusLine.bounds)
         
-        polyline = walkEnBusLine.polyline
-        polyline!.strokeColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        polyline!.strokeWidth = 5
-        polyline!.map = googleMapView
-        totalBounds = totalBounds.includingBounds(walkEnBusLine.bounds)
+        if walkStBusLine != nil {
+            polyline = walkStBusLine.polyline
+            polyline.strokeColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+            polyline.strokeWidth = 5
+            polyline.map = googleMapView
+            totalBounds = totalBounds.includingBounds(walkStBusLine.bounds)
+        }
         
-        polyline = transitBusLine.polyline
-        polyline!.strokeColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        polyline!.strokeWidth = 5
-        polyline!.map = googleMapView
-        totalBounds = totalBounds.includingBounds(transitBusLine.bounds)
+        if walkEnBusLine != nil {
+            polyline = walkEnBusLine.polyline
+            polyline.strokeColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+            polyline.strokeWidth = 5
+            polyline.map = googleMapView
+            totalBounds = totalBounds.includingBounds(walkEnBusLine.bounds)
+        }
         
-//        for coordinateIndex in 0 ..< transitBusLine.polyline.path!.count() - 1 {
-//            let coord = transitBusLine.polyline.path!.coordinate(at: coordinateIndex)
-//            print("\(coord.latitude), \(coord.longitude)")
-//        }
+        if transitBusLine != nil {
+            polyline = transitBusLine.polyline
+            polyline.strokeColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            polyline.strokeWidth = 5
+            polyline.map = googleMapView
+            totalBounds = totalBounds.includingBounds(transitBusLine.bounds)
+        }
         
         
         googleMapView.animate(with: GMSCameraUpdate.fit(totalBounds, withPadding: 100.0))
@@ -244,7 +324,8 @@ class BusStopMapViewController: UIViewController {
         busLineButton.layer.borderWidth = 2
         busLineButton.layer.borderColor = #colorLiteral(red: 0.2549019608, green: 0.4980392157, blue: 0.8470588235, alpha: 1)
         let imageWidth = busLineButton.imageView!.frame.width
-        let textWidth = (busLineButton.titleLabel?.text! as! NSString).size(withAttributes:[NSAttributedString.Key.font:busLineButton.titleLabel!.font!]).width
+        let busLineButtonLabel = busLineButton.titleLabel!.text
+        let textWidth = (busLineButtonLabel! as NSString).size(withAttributes:[NSAttributedString.Key.font:busLineButton.titleLabel!.font!]).width
         let width = textWidth + imageWidth + 30
         //24 - the sum of your insets from left and right
         busLineButtonWidthConstraint.constant = width
@@ -346,7 +427,7 @@ class BusStopMapViewController: UIViewController {
                 destinationMarker = GMSMarker()
                 destinationMarker.position = coord
                 destinationMarker.icon = image?.rotate(radians: CGFloat(alpha))
-                destinationMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+                destinationMarker.groundAnchor = CGPoint(x: 0.6, y: 0.6)
                 destinationMarker.map = googleMapView
                 destinationMarker.appearAnimation = .pop
             }
@@ -373,11 +454,10 @@ class BusStopMapViewController: UIViewController {
 
 extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var totalTransitCount = 0
+//        totalTransitCount = 0
 //        for busLine in busLines {
 //            totalTransitCount = totalTransitCount + busLine.transits.count
 //        }
-        totalTransitCount = 3
         print("transit count")
         print(totalTransitCount)
         return totalTransitCount
@@ -385,7 +465,7 @@ extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let indexVal = indexPath.row
-        var currentBusLine = transitBusLine
+        var currentBusLine: BusLineModel!
         switch indexVal {
             case 0:
                 currentBusLine = walkStBusLine
@@ -399,7 +479,7 @@ extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
             default:
                 break
         }
-        let transit = currentBusLine!.transits[0]
+        
         if indexVal != 1{
             //
             print("walking table view cell")
@@ -408,13 +488,18 @@ extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
                     topText = startStr!,
                     bottomText = targetStr!
                 
-                if indexVal == 0 {
-                    optionTransit = optionTransit + 1
-                    bottomText = transitBusLine.transits.first!.departureStop ?? "TURN"
+                if totalTransitCount == 3 {
+                    if indexVal == 0 {
+                        optionTransit = 1
+                        bottomText = transitBusLine.transits.first!.departureStop ?? "TURN"
+                    }
+                    else if indexVal == 2 {
+                        optionTransit = 2
+                        topText = transitBusLine.transits.first!.arrivalStop ?? "TURN"
+                    }
                 }
-                if indexVal == 2 {
-                    optionTransit = optionTransit + 2
-                    topText = transitBusLine.transits.first!.arrivalStop ?? "TURN"
+                else if totalTransitCount == 1 {
+                    optionTransit = 3
                 }
                 
                 cell.updateViews(busLine: currentBusLine!, option: optionTransit, top: topText, bottom: bottomText)
@@ -426,16 +511,17 @@ extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
         }
         else{
             //
+            let transit = currentBusLine!.transits[0]
             print("transit table view cell")
             if let cell = tableView.dequeueReusableCell(withIdentifier: "busLineTransitTableCell") as? BusLineTransitTableViewCell {
-                cell.updateViews(transit: transit)
+                cell.updateViews(transit: transit, busStopList: selectedBusStopList)
                 return cell
             }
             return BusLineTransitTableViewCell()
         }
     }
     
-    func tableView_(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView_old(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var indexVal = indexPath.row
         var currentBusLine = busLines.first
         for busLine in busLines {
@@ -481,7 +567,7 @@ extension BusStopMapViewController: UITableViewDataSource, UITableViewDelegate {
             //
             print("transit table view cell")
             if let cell = tableView.dequeueReusableCell(withIdentifier: "busLineTransitTableCell") as? BusLineTransitTableViewCell {
-                cell.updateViews(transit: transit)
+                cell.updateViews(transit: transit, busStopList: selectedBusStopList)
                 return cell
             }
             return BusLineTransitTableViewCell()

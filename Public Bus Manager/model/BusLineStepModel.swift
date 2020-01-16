@@ -213,6 +213,20 @@ class BusLineModel {
         polyline = GMSPolyline(path: tempPath)
         bounds = GMSCoordinateBounds(coordinate: CLLocationCoordinate2D(latitude: northeastLat, longitude: northeastLng), coordinate: CLLocationCoordinate2D(latitude: southeastLat, longitude: southeastLng))
     }
+    
+    init(customizeWalking: [String:AnyObject]) {
+        duration = customizeWalking["duration"] as? String
+        durationValue = customizeWalking["durationValue"] as? Int
+        distance = customizeWalking["distance"] as? String
+        distanceValue = customizeWalking["distanceValue"] as? Int
+        
+        transits = []
+        
+        fareCurrency = "0 USD"
+        arrivalTime = customizeWalking["arrival"] as? String
+        startAddress = customizeWalking["startAddress"] as? String
+        endAddress = customizeWalking["endAddress"] as? String
+    }
 }
 
 
